@@ -1,4 +1,4 @@
-package org.polytechtours.performance.tp.fourmispeintre;
+package org.polytechtours.performance.tp.fourmispeintre2;
 
 /*
  * CColonie.java

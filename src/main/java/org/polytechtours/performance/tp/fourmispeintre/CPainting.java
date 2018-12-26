@@ -11,6 +11,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Arrays;
 
 /**
  * <p>
@@ -46,6 +47,9 @@ public class CPainting extends Canvas implements MouseListener {
   // pixel du canvas, ce qui est necessaire au deplacemet des fourmi
   // il sert aussi pour la fonction paint du Canvas
   private Color[][] mCouleurs;
+  
+  private short[][][] field;
+  
   // couleur du fond
   private Color mCouleurFond = new Color(255, 255, 255);
   // dimensions
@@ -70,14 +74,17 @@ public class CPainting extends Canvas implements MouseListener {
     this.setBackground(mCouleurFond);
 
     // initialisation de la matrice des couleurs
-    mCouleurs = new Color[mDimension.width][mDimension.height];
+    /*mCouleurs = new Color[mDimension.width][mDimension.height];
     synchronized (mMutexCouleurs) {
       for (i = 0; i != mDimension.width; i++) {
         for (j = 0; j != mDimension.height; j++) {
           mCouleurs[i][j] = new Color(mCouleurFond.getRed(), mCouleurFond.getGreen(), mCouleurFond.getBlue());
         }
       }
-    }
+    }*/
+    
+    field = new short[mDimension.width][mDimension.height][3];
+    Arrays.fill(field,255);
 
   }
 

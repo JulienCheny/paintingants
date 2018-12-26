@@ -1,4 +1,4 @@
-package org.polytechtours.performance.tp.fourmispeintre;
+package org.polytechtours.performance.tp.fourmispeintre2;
 // package PaintingAnts_v3;
 // version : 4.0
 
@@ -8,7 +8,16 @@ import java.util.Random;
 public class CFourmi {
   // Tableau des incrémentations à effectuer sur la position des fourmis
   // en fonction de la direction du deplacement
-  static private int[][] mIncDirection = new int[8][2];
+  static private final int[][] mIncDirection = {
+			{0, -1},
+			{1, -1},
+			{1,  0},
+			{1,  1},
+			{0,  1},
+			{-1, 1},
+			{-1, 0},
+			{-1, -1}
+  };
   // le generateur aléatoire (Random est thread safe donc on la partage)
   private static Random GenerateurAleatoire = new Random();
   // couleur déposé par la fourmi
@@ -48,7 +57,6 @@ public class CFourmi {
 
     // direction de départ
     mDirection = pInitDirection;
-
     // taille du trait
     mTaille = pTaille;
 
@@ -65,24 +73,6 @@ public class CFourmi {
     } else {
       mDecalDir = 1;
     }
-
-    // initialisation du tableau des directions
-    CFourmi.mIncDirection[0][0] = 0;
-    CFourmi.mIncDirection[0][1] = -1;
-    CFourmi.mIncDirection[1][0] = 1;
-    CFourmi.mIncDirection[1][1] = -1;
-    CFourmi.mIncDirection[2][0] = 1;
-    CFourmi.mIncDirection[2][1] = 0;
-    CFourmi.mIncDirection[3][0] = 1;
-    CFourmi.mIncDirection[3][1] = 1;
-    CFourmi.mIncDirection[4][0] = 0;
-    CFourmi.mIncDirection[4][1] = 1;
-    CFourmi.mIncDirection[5][0] = -1;
-    CFourmi.mIncDirection[5][1] = 1;
-    CFourmi.mIncDirection[6][0] = -1;
-    CFourmi.mIncDirection[6][1] = 0;
-    CFourmi.mIncDirection[7][0] = -1;
-    CFourmi.mIncDirection[7][1] = -1;
 
     mSeuilLuminance = pSeuilLuminance;
     mNbDeplacements = 0;
@@ -112,7 +102,8 @@ public class CFourmi {
     if (mApplis.mBaseImage != null) {
       lCouleur = new Color(mApplis.mBaseImage.getRGB(i, j));
     } else {
-      lCouleur = new Color(mPainting.getCouleur(i, j).getRGB());
+      short[] couleurs = mPainting.getCouleur(i, j);
+      lCouleur = new Color(couleurs[0], couleurs[1], couleurs[2]);
     }
     if (testCouleur(lCouleur)) {
       dir[0] = 1;
@@ -123,7 +114,8 @@ public class CFourmi {
     if (mApplis.mBaseImage != null) {
       lCouleur = new Color(mApplis.mBaseImage.getRGB(i, j));
     } else {
-      lCouleur = new Color(mPainting.getCouleur(i, j).getRGB());
+    	short[] couleurs = mPainting.getCouleur(i, j);
+        lCouleur = new Color(couleurs[0], couleurs[1], couleurs[2]);
     }
     if (testCouleur(lCouleur)) {
       dir[1] = 1;
@@ -133,7 +125,8 @@ public class CFourmi {
     if (mApplis.mBaseImage != null) {
       lCouleur = new Color(mApplis.mBaseImage.getRGB(i, j));
     } else {
-      lCouleur = new Color(mPainting.getCouleur(i, j).getRGB());
+    	short[] couleurs = mPainting.getCouleur(i, j);
+        lCouleur = new Color(couleurs[0], couleurs[1], couleurs[2]);
     }
     if (testCouleur(lCouleur)) {
       dir[2] = 1;
