@@ -3,6 +3,7 @@ package org.polytechtours.performance.tp.fourmispeintre2;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -98,9 +99,6 @@ public class PaintingAnts extends java.applet.Applet implements Runnable {
     mLargeur = mDimension.width;
     mHauteur = mDimension.height;
 
-    mPainting = new CPainting(mDimension, this);
-    add(mPainting);
-
     // lecture de l'image
     lFileName = urlLoader.findResource("images/" + getParameter("Img"));
     try {
@@ -111,11 +109,20 @@ public class PaintingAnts extends java.applet.Applet implements Runnable {
     }
 
     if (mBaseImage != null) {
-      mLargeur = mBaseImage.getWidth();
-      mHauteur = mBaseImage.getHeight();
-      mDimension.setSize(mLargeur, mHauteur);
-      resize(mDimension);
+        mLargeur = mBaseImage.getWidth();
+        mHauteur = mBaseImage.getHeight();
+        mDimension.setSize(mLargeur, mHauteur);
+        resize(mDimension);
     }
+    else {
+    	mBaseImage = new BufferedImage(mDimension.width, mDimension.height, BufferedImage.TYPE_INT_RGB);
+    	Graphics2D graphics = mBaseImage.createGraphics();
+    	graphics.setPaint (new Color(255, 255, 255));
+    	graphics.fillRect ( 0, 0, mBaseImage.getWidth(), mBaseImage.getHeight() );
+    }
+    
+    mPainting = new CPainting(mDimension, this);
+    add(mPainting);
 
     readParameterFourmis();
 
@@ -134,7 +141,7 @@ public class PaintingAnts extends java.applet.Applet implements Runnable {
     if (mBaseImage == null) {
       return;
     }
-    g.drawImage(mBaseImage, 0, 0, this);
+    mPainting.repaint();
   }
 
   /****************************************************************************/

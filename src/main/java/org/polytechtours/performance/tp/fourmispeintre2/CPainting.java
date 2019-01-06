@@ -54,6 +54,10 @@ public class CPainting extends Canvas implements MouseListener {
   private PaintingAnts mApplis;
 
   private boolean mSuspendu = false;
+  
+  private long lastRefresh = System.currentTimeMillis();
+  
+  private static int REFRESH_TIME_MILLIS = 100;
 
   /******************************************************************************
    * Titre : public CPainting() Description : Constructeur de la classe
@@ -61,7 +65,7 @@ public class CPainting extends Canvas implements MouseListener {
   public CPainting(Dimension pDimension, PaintingAnts pApplis) {
     int i, j;
     addMouseListener(this);
-
+    
     mApplis = pApplis;
 
     mDimension = pDimension;
@@ -191,14 +195,14 @@ public class CPainting extends Canvas implements MouseListener {
    ******************************************************************************/
   @Override
   public void paint(Graphics pGraphics) {
-    int i, j;
+    /*int i, j;
 
 	  for (i = 0; i < mDimension.width; i++) {
 	    for (j = 0; j < mDimension.height; j++) {
 	      pGraphics.setColor(new Color(field[i][j][0], field[i][j][1], field[i][j][2]));
 	      pGraphics.fillRect(i, j, 1, 1);
 	    }
-	  }
+	  }*/
   }
 
   /******************************************************************************
@@ -209,12 +213,13 @@ public class CPainting extends Canvas implements MouseListener {
   public void setCouleur(int x, int y, Color c, int pTaille) {
     
       if (!mSuspendu) {
-        // on colorie la case sur laquelle se trouve la fourmi
-        mGraphics.setColor(c);
-        mGraphics.fillRect(x, y, 1, 1);
+    	  CConvolution.convol(x, y, c, mApplis.mBaseImage, field, pTaille);
+    	  //mGraphics.drawImage(mApplis.mBaseImage, 0, 0, null);
+    	  if(lastRefresh + REFRESH_TIME_MILLIS < System.currentTimeMillis()) {
+    		  mGraphics.drawImage(mApplis.mBaseImage, 0, 0, null);
+    		  lastRefresh = System.currentTimeMillis();
+    	  }
       }
-      
-      CConvolution.convol(x, y, c, mGraphics, field, pTaille);
   }
 
   /******************************************************************************
