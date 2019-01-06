@@ -141,7 +141,6 @@ public class PaintingAnts extends java.applet.Applet implements Runnable {
     if (mBaseImage == null) {
       return;
     }
-    mPainting.repaint();
   }
 
   /****************************************************************************/
@@ -426,17 +425,11 @@ public class PaintingAnts extends java.applet.Applet implements Runnable {
 
   @Override
   public void run() {
-    int i;
     String lMessage;
 
     mPainting.init();
 
     Thread currentThread = Thread.currentThread();
-
-    /*
-     * for ( i=0 ; i<mColonie.size() ; i++ ) {
-     * ((CFourmi)mColonie.elementAt(i)).start(); }
-     */
 
     mThreadColony.start();
 

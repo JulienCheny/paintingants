@@ -224,7 +224,6 @@ public class CFourmi {
     /* test */
     if (Math.abs(mLuminanceCouleurSuivie - lLuminance) < mSeuilLuminance) {
       lReponse = true;
-      // System.out.print(x);
     }
 
     return lReponse;

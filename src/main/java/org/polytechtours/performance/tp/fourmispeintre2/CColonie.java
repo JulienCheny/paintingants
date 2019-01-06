@@ -35,11 +35,6 @@ public class CColonie implements Runnable {
         for (int i = 0; i < mColonie.size(); i++) {
           mColonie.get(i).deplacer();
         }
-      } else {
-        /*
-         * try { Thread.sleep(100); } catch (InterruptedException e) { break; }
-         */
-
       }
     }
   }

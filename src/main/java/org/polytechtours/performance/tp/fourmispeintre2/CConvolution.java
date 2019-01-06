@@ -1,8 +1,6 @@
 package org.polytechtours.performance.tp.fourmispeintre2;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 public class CConvolution {
@@ -59,8 +57,6 @@ public class CConvolution {
 	            		red += mConv[k][l] * field[m][n][0];
 	            		green += mConv[k][l] * field[m][n][1];
 	            		blue += mConv[k][l] * field[m][n][2];
-	            		//System.out.println("cred = " + c.getRed() + ", cgreen = " + c.getGreen() + ", cblue = " + c.getBlue() + ", fred = " + field[m][n][0]);
-	            		//System.out.println("r = " + red + ", g = " + green + ", b = " + blue);
 	                }
 	            }
 	            m = (x + i - 1 + fieldWidth) % fieldWidth;
@@ -68,11 +64,9 @@ public class CConvolution {
 	            red /= mFactorConv;
 	            green /= mFactorConv;
 	            blue /= mFactorConv;
-	            //System.out.println(field[m][n][0] + " " + field[m][n][1] + " " + field[m][n][2]);
 	            field[m][n][0] = (short) red;
 	            field[m][n][1] = (short) green;
 	            field[m][n][2] = (short) blue;
-	            //System.out.println(red + " " + green + " " + blue);
 	            mBaseImage.setRGB(m, n, ColorTools.getRGB(red, green, blue));
 	        }
 	    }

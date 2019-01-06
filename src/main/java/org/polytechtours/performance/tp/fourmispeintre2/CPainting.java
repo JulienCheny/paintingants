@@ -37,13 +37,6 @@ public class CPainting extends Canvas implements MouseListener {
   // matrice servant pour le produit de convolution
   // Objet de type Graphics permettant de manipuler l'affichage du Canvas
   private Graphics mGraphics;
-  // Objet ne servant que pour les bloc synchronized pour la manipulation du
-  // tableau des couleurs
-  private Object mMutexCouleurs = new Object();
-  // tableau des couleurs, il permert de conserver en memoire l'état de chaque
-  // pixel du canvas, ce qui est necessaire au deplacemet des fourmi
-  // il sert aussi pour la fonction paint du Canvas
-  //private Color[][] mCouleurs;
   
   private short[][][] field;
   // couleur du fond
@@ -63,7 +56,6 @@ public class CPainting extends Canvas implements MouseListener {
    * Titre : public CPainting() Description : Constructeur de la classe
    ******************************************************************************/
   public CPainting(Dimension pDimension, PaintingAnts pApplis) {
-    int i, j;
     addMouseListener(this);
     
     mApplis = pApplis;
@@ -72,16 +64,6 @@ public class CPainting extends Canvas implements MouseListener {
     setBounds(new Rectangle(0, 0, mDimension.width, mDimension.height));
 
     this.setBackground(mCouleurFond);
-
-    // initialisation de la matrice des couleurs
-    /*mCouleurs = new Color[mDimension.width][mDimension.height];
-    synchronized (mMutexCouleurs) {
-      for (i = 0; i != mDimension.width; i++) {
-        for (j = 0; j != mDimension.height; j++) {
-          mCouleurs[i][j] = new Color(mCouleurFond.getRed(), mCouleurFond.getGreen(), mCouleurFond.getBlue());
-        }
-      }
-    }*/
     
     field = new short[mDimension.width][mDimension.height][3];
     for(short[][] colTab : field)
@@ -127,19 +109,9 @@ public class CPainting extends Canvas implements MouseListener {
    * et initialise le tableau des couleurs avec la couleur blanche
    ******************************************************************************/
   public void init() {
-    int i, j;
     mGraphics = getGraphics();
     
     mGraphics.clearRect(0, 0, mDimension.width, mDimension.height);
-
-      // initialisation de la matrice des couleurs
-
-      /*for (i = 0; i != mDimension.width; i++) {
-        for (j = 0; j != mDimension.height; j++) {
-          mCouleurs[i][j] = new Color(mCouleurFond.getRed(), mCouleurFond.getGreen(), mCouleurFond.getBlue());
-        }
-      }
-    }*/
     
     field = new short[mDimension.width][mDimension.height][3];
     for(short[][] colTab : field)
@@ -195,14 +167,6 @@ public class CPainting extends Canvas implements MouseListener {
    ******************************************************************************/
   @Override
   public void paint(Graphics pGraphics) {
-    /*int i, j;
-
-	  for (i = 0; i < mDimension.width; i++) {
-	    for (j = 0; j < mDimension.height; j++) {
-	      pGraphics.setColor(new Color(field[i][j][0], field[i][j][1], field[i][j][2]));
-	      pGraphics.fillRect(i, j, 1, 1);
-	    }
-	  }*/
   }
 
   /******************************************************************************
@@ -214,7 +178,6 @@ public class CPainting extends Canvas implements MouseListener {
     
       if (!mSuspendu) {
     	  CConvolution.convol(x, y, c, mApplis.mBaseImage, field, pTaille);
-    	  //mGraphics.drawImage(mApplis.mBaseImage, 0, 0, null);
     	  if(lastRefresh + REFRESH_TIME_MILLIS < System.currentTimeMillis()) {
     		  mGraphics.drawImage(mApplis.mBaseImage, 0, 0, null);
     		  lastRefresh = System.currentTimeMillis();
